@@ -1,6 +1,6 @@
 variable "version" {
   type    = string
-  default = "lateest"
+  default = "latest"
 }
 
 source "docker" "debian" {

@@ -6,5 +6,5 @@ name: build
 steps:
 - name: build
   commands:
-    - packer init
+    - packer init .
     - packer build .

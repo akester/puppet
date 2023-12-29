@@ -5,7 +5,7 @@ variable "version" {
 
 source "docker" "debian" {
   commit  = true
-  image   = "debian:12"
+  image   = "debian:11"
 }
 
 build {
@@ -39,7 +39,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get -y install wget puppet",
+      "apt-get -y install wget",
       "wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /usr/local/bin/sops",
       "chmod +x /usr/local/bin/sops",
       "chmod a+r /etc/age-key.txt",
@@ -47,8 +47,53 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "apt-get -y install puppet git",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bullseye.deb",
+      "dpkg -i /tmp/puppet-release.deb",
+      "apt-get update",
+      "apt-get install puppet-bolt",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
+  provisioner "shell" {
+    environment_vars = [
+      "DEBIAN_FRONTEND=noninteractive",
+      "DEBIAN_PRIORITY=critical"
+    ]
+    inline           = [
+      "set -e",
+      "set -x",
+      "rm /etc/apt/apt.conf.d/01proxy",
+      "apt update",
+      "apt autoremove",
+      "apt clean",
+    ]
+    inline_shebang   = "/bin/bash -e"
+  }
+
   post-processor "docker-tag" {
-    repository = "kester-cloud/sops"
+    repository = "kester-cloud/puppet"
     tags       = [
       "${var.version}"
     ]

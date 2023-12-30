@@ -71,7 +71,7 @@ build {
       "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bullseye.deb",
       "dpkg -i /tmp/puppet-release.deb",
       "apt-get update",
-      "apt-get install puppet-bolt",
+      "apt-get install puppet-bolt pdk",
     ]
     inline_shebang   = "/bin/bash -e"
   }

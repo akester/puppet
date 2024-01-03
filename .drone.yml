@@ -8,4 +8,6 @@ steps:
   commands:
     - packer init .
     - packer build .
+- name: push
+  commands:
     - docker push registry.gatewayks.net/kester-cloud/puppet:latest

@@ -93,7 +93,7 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "kester-cloud/puppet"
+    repository = "registry.gatewayks.net/kester-cloud/puppet"
     tags       = [
       "${var.version}"
     ]

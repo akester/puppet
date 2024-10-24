@@ -19,7 +19,6 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "echo 'Acquire::http::proxy \"http://10.0.10.22:3142\";' | tee /etc/apt/apt.conf.d/01proxy",
       "apt-get update",
       "apt-get -y dist-upgrade",
     ]

@@ -70,7 +70,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-buster.deb",
+      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bookworm.deb",
       "dpkg -i /tmp/puppet-release.deb",
       "apt-get update",
       "apt-get install puppet-bolt pdk",

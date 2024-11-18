@@ -5,7 +5,7 @@ variable "version" {
 
 source "docker" "debian" {
   commit  = true
-  image   = "debian:12"
+  image   = "debian:11"
 }
 
 build {
@@ -70,7 +70,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bookworm.deb",
+      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bullseye.deb",
       "dpkg -i /tmp/puppet-release.deb",
       "apt-get update",
       "apt-get install puppet-bolt pdk",
@@ -88,8 +88,8 @@ build {
       "set -e",
       "set -x",
       "apt-get install -y gnupg software-properties-common",
-      "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null",
-      "echo \"deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/hashicorp.list",
+      "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null",
+      "echo \"deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main\" | tee /etc/apt/sources.list.d/hashicorp.list",
       "apt-get update",
       "apt-get install terraform",
     ]

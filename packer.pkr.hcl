@@ -5,7 +5,7 @@ variable "version" {
 
 source "docker" "debian" {
   commit  = true
-  image   = "debian:11"
+  image   = "debian:12"
 }
 
 build {
@@ -70,7 +70,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bullseye.deb",
+      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-buster.deb",
       "dpkg -i /tmp/puppet-release.deb",
       "apt-get update",
       "apt-get install puppet-bolt pdk",

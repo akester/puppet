@@ -11,4 +11,4 @@ login:
 	echo '${DOCKER_TOKEN}' | docker login --username akester --password-stdin
 
 push-remote: login
-	docker push akester/puppet:latest
+	docker push akester/puppet:alpine

@@ -127,7 +127,7 @@ build {
   post-processor "docker-tag" {
     repository = "akester/puppet"
     tags       = [
-      "latest"
+      "alpine"
     ]
   }
 }

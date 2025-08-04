@@ -5,6 +5,9 @@ name: build
 
 steps:
   - name: build
+    environment:
+      SOPS_VERSION: "3.10.2"
+      BOLT_VERSION: "4.0.0-1"
     commands:
       - make
 

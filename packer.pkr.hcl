@@ -1,6 +1,6 @@
-variable "version" {
+variable "sops_version" {
   type    = string
-  default = "latest"
+  default = "3.10.2"
 }
 
 source "docker" "alpine" {
@@ -19,42 +19,45 @@ build {
     ]
   }
 
+  # Install some helper software we'll use to install other things
+  provisioner "shell" {
+    inline = [
+      "apk add --no-cache wget",
+      "apk add --no-cache coreutils", # For install
+      "apk add --no-cache rsync",
+    ]
+  }
+
+  # Install sops
+  provisioner "shell" {
+    inline = [
+      "wget -O /tmp/sops https://github.com/getsops/sops/releases/download/v${var.sops_version}/sops-v${var.sops_version}.linux.amd64",
+      "install -m 0755 /tmp/sops /usr/bin/"
+    ]
+  }
+
+  # Install puppet
+  provisioner "file" {
+    source = "./build/pkg/"
+    destination = "/tmp/pkg/"
+  }
+  provisioner "shell" {
+    inline = [
+      "set -x",
+      "rsync -ra /tmp/pkg/usr/ /usr/",
+      "rsync -ra /tmp/pkg/opt/ /opt/",
+      "chmod 0755 /opt/puppetlabs/bin/bolt",
+      "chmod 0755 /usr/local/bin/bolt",
+    ]
+  }
+
   # Remove APK cache for space
   provisioner "shell" {
     inline = [
       "rm -rf /var/cache/apk/*",
+      "rm -rf /tmp/*",
     ]
   }
-
-  # provisioner "shell" {
-  #   environment_vars = [
-  #     "alpine_FRONTEND=noninteractive",
-  #     "alpine_PRIORITY=critical"
-  #   ]
-  #   inline           = [
-  #     "set -e",
-  #     "set -x",
-  #     "apt-get update",
-  #     "apt-get -y dist-upgrade",
-  #   ]
-  #   inline_shebang   = "/bin/bash -e"
-  # }
-
-  # # Install Sops
-  # provisioner "shell" {
-  #   environment_vars = [
-  #     "alpine_FRONTEND=noninteractive",
-  #     "alpine_PRIORITY=critical"
-  #   ]
-  #   inline           = [
-  #     "set -e",
-  #     "set -x",
-  #     "apt-get -y install wget",
-  #     "wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /usr/local/bin/sops",
-  #     "chmod +x /usr/local/bin/sops",
-  #   ]
-  #   inline_shebang   = "/bin/bash -e"
-  # }
 
   # # Install puppet / other apt packages
   # provisioner "shell" {
@@ -124,7 +127,7 @@ build {
   post-processor "docker-tag" {
     repository = "akester/puppet"
     tags       = [
-      "${var.version}"
+      "latest"
     ]
   }
 }

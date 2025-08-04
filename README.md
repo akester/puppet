@@ -1,16 +1,11 @@
 # Puppet
 
 This is a container with a few build tools used to build my internal Puppet code
-and set it up for deployments.  It's based on Debian 11 (because reasons), and
-includes these tools:
+and set it up for deployments.  It includes these tools:
 
-* puppet
 * puppet bolt
 * sops
 * terraform
-
-It also has the upstream Hashicorp and Puppet upstream repos installed, so you
-can install other packages you need.
 
 ## Usage
 
@@ -52,8 +47,9 @@ steps:
 
 ## Building
 
-This container is based on Debian 11 due to compatibility with Puppet's release
-code.  At some point, I may port the whole thing to Debian 12 or Alpine.
+This container is built on Alpine, but we use the Debian 12 puppet-bolt debian
+package.  We unpack that on our debian host system using `dpkg-deb`, so you'll
+need that to run the `unpack-puppet.sh` helper.
 
 The container is built using Packer and has a Makefile, but there's a number of
 variables set by the CI config to centralize versions of libraries.   Build locally via:

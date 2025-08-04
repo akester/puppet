@@ -1,5 +1,5 @@
-build: init
-	packer build .
+build: init unpack-puppet
+	packer build -var "sops_version=${SOPS_VERSION}" .
 	
 init:
 	packer init .

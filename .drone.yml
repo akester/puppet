@@ -4,15 +4,18 @@ type: exec
 name: build
 
 steps:
-- name: build
-  commands:
-    - make
+  - name: build
+    commands:
+      - make
 
-- name: push-remote
-  environment:
-    DOCKER_TOKEN:
-      from_secret: DOCKER_TOKEN_AKESTER
-  depends_on:
-    - build
-  commands:
-    - make push-remote
+  - name: push-remote
+    environment:
+      DOCKER_TOKEN:
+        from_secret: DOCKER_TOKEN_AKESTER
+    depends_on:
+      - build
+    commands:
+      - make push-remote
+    when:
+      branch:
+        - master

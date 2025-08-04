@@ -12,6 +12,44 @@ includes these tools:
 It also has the upstream Hashicorp and Puppet upstream repos installed, so you
 can install other packages you need.
 
+## Usage
+
+I use this in Drone pipelines to automatically build and deploy puppet code.  You can include it in the pipeline like this:
+
+```
+---
+kind: pipeline
+name: deploy
+type: docker
+
+concurrency:
+  limit: 1
+
+steps:
+- name: submodules
+  image: alpine/git
+  commands:
+  - git submodule init
+  - git submodule update --recursive
+
+- name: sops
+  image: akester/puppet
+  environment:
+    SOPS_AGE_KEY_FILE: /tmp/age-key.txt
+    SOPS_AGE_KEY:
+      from_secret: AGE_KEY
+  commands:
+    - echo "$AGE_KEY" > /tmp/age-key.txt
+    - bash dec.sh
+
+- name: bolt
+  image: akester/puppet
+  commands:
+  - bolt module install
+
+...
+```
+
 ## Building
 
 This container is based on Debian 11 due to compatibility with Puppet's release

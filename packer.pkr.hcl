@@ -31,7 +31,7 @@ build {
   # Install sops
   provisioner "shell" {
     inline = [
-      "wget -O /tmp/sops https://github.com/getsops/sops/releases/download/v${var.sops_version}/sops-v${var.sops_version}.linux.amd64",
+      "wget -nv -O /tmp/sops https://github.com/getsops/sops/releases/download/v${var.sops_version}/sops-v${var.sops_version}.linux.amd64",
       "install -m 0755 /tmp/sops /usr/bin/"
     ]
   }

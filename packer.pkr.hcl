@@ -25,11 +25,6 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
-  provisioner "file" {
-    source = "/opt/drone/age-key.txt"
-    destination = "/etc/age-key.txt"
-  }
-
   # Install Sops
   provisioner "shell" {
     environment_vars = [
@@ -42,7 +37,6 @@ build {
       "apt-get -y install wget",
       "wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /usr/local/bin/sops",
       "chmod +x /usr/local/bin/sops",
-      "chmod a+r /etc/age-key.txt",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -56,7 +50,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get -y install puppet git make",
+      "apt-get -y install puppet git build-essential",
     ]
     inline_shebang   = "/bin/bash -e"
   }
@@ -113,7 +107,7 @@ build {
   }
 
   post-processor "docker-tag" {
-    repository = "registry.gatewayks.net/kester-cloud/puppet"
+    repository = "akester/puppet"
     tags       = [
       "${var.version}"
     ]

@@ -25,6 +25,7 @@ build {
       "apk add --no-cache wget",
       "apk add --no-cache coreutils", # For install
       "apk add --no-cache rsync",
+      "apk add --no-cache bash", # For downstream struff
     ]
   }
 

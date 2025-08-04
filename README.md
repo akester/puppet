@@ -17,9 +17,12 @@ can install other packages you need.
 This container is based on Debian 11 due to compatibility with Puppet's release
 code.  At some point, I may port the whole thing to Debian 12 or Alpine.
 
-The container is built using Packer, run these to init and build:
+The container is built using Packer and has a Makefile, just run `make` to start
+a build.
 
-```
-packer init .
-packer build .
-```
+
+## Mirror
+
+If you're looking at this repo at https://github.com/akester/puppet/, know
+that it's a mirror of my local code repository.  This repo is monitored though,
+so any pull requests or issues will be seen.

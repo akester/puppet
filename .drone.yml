@@ -6,8 +6,13 @@ name: build
 steps:
 - name: build
   commands:
-    - packer init .
-    - packer build .
-- name: push
+    - make
+
+- name: push-remote
+  environment:
+    DOCKER_TOKEN:
+      from_secret: DOCKER_TOKEN_AKESTER
+  depends_on:
+    - build
   commands:
-    - docker push registry.gatewayks.net/kester-cloud/puppet:latest
+    - make push-remote

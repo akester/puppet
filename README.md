@@ -55,8 +55,15 @@ steps:
 This container is based on Debian 11 due to compatibility with Puppet's release
 code.  At some point, I may port the whole thing to Debian 12 or Alpine.
 
-The container is built using Packer and has a Makefile, just run `make` to start
-a build.
+The container is built using Packer and has a Makefile, but there's a number of
+variables set by the CI config to centralize versions of libraries.   Build locally via:
+
+```
+packer init .
+packer build .
+```
+
+And update `.drone.yml` and use `make` if you're in CI.
 
 
 ## Mirror

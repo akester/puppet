@@ -5,7 +5,7 @@ variable "version" {
 
 source "docker" "debian" {
   commit  = true
-  image   = "debian:11"
+  image   = "debian:12"
 }
 
 build {
@@ -35,7 +35,7 @@ build {
       "set -e",
       "set -x",
       "apt-get -y install wget",
-      "wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /usr/local/bin/sops",
+      "wget -nv https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O /usr/local/bin/sops",
       "chmod +x /usr/local/bin/sops",
     ]
     inline_shebang   = "/bin/bash -e"
@@ -64,7 +64,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "wget -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bullseye.deb",
+      "wget -nv -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bookworm.deb",
       "dpkg -i /tmp/puppet-release.deb",
       "apt-get update",
       "apt-get install puppet-bolt pdk",
@@ -82,7 +82,7 @@ build {
       "set -e",
       "set -x",
       "apt-get install -y gnupg software-properties-common",
-      "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null",
+      "wget -nv -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null",
       "echo \"deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main\" | tee /etc/apt/sources.list.d/hashicorp.list",
       "apt-get update",
       "apt-get install terraform",

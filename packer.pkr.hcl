@@ -99,7 +99,8 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y python3-minimal python3-requests",
+      "apt-get install -y python3-minimal python3-requests python3-pip",
+      "pip3 install uptime-kuma-api",
     ]
     inline_shebang   = "/bin/bash -e"
   }

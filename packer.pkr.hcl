@@ -115,7 +115,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get install -y openssh-client rsync",
+      "apt-get install -y openssh-client rsync curl",
     ]
     inline_shebang   = "/bin/bash -e"
   }

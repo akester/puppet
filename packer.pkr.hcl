@@ -50,7 +50,7 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "apt-get -y install puppet git build-essential",
+      "apt-get -y install puppet git build-essential jq",
     ]
     inline_shebang   = "/bin/bash -e"
   }

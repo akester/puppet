@@ -3,13 +3,13 @@ variable "version" {
   default = "latest"
 }
 
-source "docker" "alpine-amd64" {
+source "docker" "debian-amd64" {
   commit = true
   image  = "debian:12"
   platform = "linux/amd64"
 }
 
-source "docker" "alpine-arm64" {
+source "docker" "debian-arm64" {
   commit = true
   image  = "arm64v8/debian:12"
   platform = "linux/arm64"

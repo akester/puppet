@@ -18,7 +18,6 @@ push-manifest:
     - exec
   dependencies:
     - build-x86
-    - build-arm
   script:
     - make push-manifest
   only:

@@ -3,13 +3,23 @@ variable "version" {
   default = "latest"
 }
 
-source "docker" "debian" {
-  commit  = true
-  image   = "debian:12"
+source "docker" "alpine-amd64" {
+  commit = true
+  image  = "debian:12"
+  platform = "linux/amd64"
+}
+
+source "docker" "alpine-arm64" {
+  commit = true
+  image  = "arm64v8/debian:12"
+  platform = "linux/arm64"
 }
 
 build {
-  sources = ["source.docker.debian"]
+  sources = [
+    "source.docker.debian-amd64",
+    "source.docker.debian-arm64"
+  ]
 
   provisioner "shell" {
     environment_vars = [
@@ -138,8 +148,8 @@ build {
 
   post-processor "docker-tag" {
     repository = "akester/puppet"
-    tags       = [
-      "${var.version}"
+    tags = [
+      "${source.name}",
     ]
   }
 }

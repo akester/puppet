@@ -9,8 +9,6 @@ build-x86:
   script:
     - make build-x86
     - make push-x86
-  only:
-    - master
 
 push-manifest:
   stage: deploy
@@ -20,5 +18,3 @@ push-manifest:
     - build-x86
   script:
     - make push-manifest
-  only:
-    - master

@@ -9,16 +9,9 @@ source "docker" "debian-amd64" {
   platform = "linux/amd64"
 }
 
-source "docker" "debian-arm64" {
-  commit = true
-  image  = "arm64v8/debian:12"
-  platform = "linux/arm64"
-}
-
 build {
   sources = [
     "source.docker.debian-amd64",
-    "source.docker.debian-arm64"
   ]
 
   provisioner "shell" {

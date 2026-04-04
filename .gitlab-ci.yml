@@ -12,16 +12,6 @@ build-x86:
   only:
     - master
 
-build-arm:
-  stage: build
-  tags:
-    - exec-arm
-  script:
-    - make build-arm
-    - make push-arm
-  only:
-    - master
-
 push-manifest:
   stage: deploy
   tags:

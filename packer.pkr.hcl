@@ -1,6 +1,5 @@
 variable "version" {
   type    = string
-  default = "latest"
 }
 
 source "docker" "debian-amd64" {
@@ -142,7 +141,7 @@ build {
   post-processor "docker-tag" {
     repository = "akester/puppet"
     tags = [
-      "${source.name}",
+      "${source.name}-${var.version}",
     ]
   }
 }

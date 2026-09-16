@@ -92,22 +92,6 @@ build {
     inline_shebang   = "/bin/bash -e"
   }
 
-  # Install Python so we can use this for some other things.
-  provisioner "shell" {
-    environment_vars = [
-      "DEBIAN_FRONTEND=noninteractive",
-      "DEBIAN_PRIORITY=critical"
-    ]
-    inline           = [
-      "set -e",
-      "set -x",
-      "apt-get install -y python3-minimal python3-requests python3-pip",
-      "pip3 install uptime-kuma-api --break-system-packages",
-      "pip3 install cloudflare --break-system-packages",
-    ]
-    inline_shebang   = "/bin/bash -e"
-  }
-
   # Install SSH and Rsync so we can use this to deploy
   provisioner "shell" {
     environment_vars = [

@@ -1,11 +1,10 @@
-# Puppet
+# Openvox (Puppet)
 
 This is a container with a few build tools used to build my internal Puppet code
 and set it up for deployments.  It's based on Debian 11 (because reasons), and
 includes these tools:
 
-* puppet
-* puppet bolt
+* openbolt
 * sops
 * terraform
 
@@ -51,9 +50,6 @@ steps:
 ```
 
 ## Building
-
-This container is based on Debian 11 due to compatibility with Puppet's release
-code.  At some point, I may port the whole thing to Debian 12 or Alpine.
 
 The container is built using Packer and has a Makefile, just run `make` to start
 a build.

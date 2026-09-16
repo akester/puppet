@@ -4,7 +4,7 @@ variable "version" {
 
 source "docker" "debian-amd64" {
   commit = true
-  image  = "debian:12"
+  image  = "debian:13"
   platform = "linux/amd64"
 }
 
@@ -66,10 +66,10 @@ build {
     inline           = [
       "set -e",
       "set -x",
-      "wget -nv -O /tmp/puppet-release.deb https://apt.puppet.com/puppet-tools-release-bookworm.deb",
-      "dpkg -i /tmp/puppet-release.deb",
+      "wget -nv -O /tmp/openvox-release.deb https://apt.voxpupuli.org/openvox8-release-debian13.deb",
+      "dpkg -i /tmp/openvox-release.deb",
       "apt-get update",
-      "apt-get install puppet-bolt pdk",
+      "apt-get install -y openbolt",
     ]
     inline_shebang   = "/bin/bash -e"
   }

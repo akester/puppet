@@ -13,6 +13,18 @@ build {
     "source.docker.debian-amd64",
   ]
 
+  # Use the local apt cache (amd64 only), removed at the end of the build
+  provisioner "shell" {
+    only = ["docker.debian-amd64"]
+    inline = [
+      "set -e",
+      "set -x",
+      "cp /etc/apt/sources.list.d/debian.sources /root/debian.sources.orig",
+      "sed -i 's#http://deb.debian.org/#http://apt.kester.cloud/#' /etc/apt/sources.list.d/debian.sources",
+    ]
+    inline_shebang = "/bin/bash -e"
+  }
+
   provisioner "shell" {
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive",
@@ -106,6 +118,18 @@ build {
       "apt clean",
     ]
     inline_shebang   = "/bin/bash -e"
+  }
+
+  # Remove the local apt cache
+  provisioner "shell" {
+    only = ["docker.debian-amd64"]
+    inline = [
+      "set -e",
+      "set -x",
+      "mv /root/debian.sources.orig /etc/apt/sources.list.d/debian.sources",
+      "rm -rf /var/lib/apt/lists/*",
+    ]
+    inline_shebang = "/bin/bash -e"
   }
 
   post-processor "docker-tag" {
